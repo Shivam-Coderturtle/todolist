@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDoList.com</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+    }
+    .panel {
+      width: 45%;
+      background: white;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .panel h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    input[type="text"], input[type="date"] {
+      padding: 10px;
+      margin: 5px;
+      width: calc(100% - 24px);
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #eee;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task-date {
+      font-size: 0.85em;
+      color: #555;
+    }
+    .complete-btn {
+      background: #007bff;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .complete-btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ToDoList.com</h1>
+  </header>
+
+  <div class="container">
+    <div class="panel">
+      <h2>Enter Task</h2>
+      <input type="text" id="taskInput" placeholder="Task description...">
+      <input type="date" id="taskDate">
+      <button onclick="addTask()">Add Task</button>
+      <h2>Pending Tasks</h2>
+      <ul id="pendingList"></ul>
+    </div>
+
+    <div class="panel">
+      <h2>Completed Tasks</h2>
+      <ul id="completedList"></ul>
+    </div>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskDate = document.getElementById("taskDate");
+      const pendingList = document.getElementById("pendingList");
+
+      if (taskInput.value.trim() === '' || taskDate.value === '') return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `<span><strong>${taskInput.value}</strong><br><span class='task-date'>${taskDate.value}</span></span>
+                      <button class="complete-btn" onclick="completeTask(this)">Done</button>`;
+
+      pendingList.appendChild(li);
+
+      taskInput.value = '';
+      taskDate.value = '';
+    }
+
+    function completeTask(button) {
+      const completedList = document.getElementById("completedList");
+      const taskItem = button.parentElement;
+      button.remove();
+      completedList.appendChild(taskItem);
+    }
+  </script>
+</body>
+</html>
